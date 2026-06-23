@@ -1,11 +1,18 @@
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import { Text } from "react-native";
 import { useEffect } from "react";
+import { Text } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     "Iceberg-Regular": require("@/assets/fonts/Iceberg/Iceberg-Regular.ttf"),
+    "Hind-Regular": require("@/assets/fonts/Hind/Hind-Regular.ttf"),
+    "Hind-Medium": require("@/assets/fonts/Hind/Hind-Medium.ttf"),
+    "Hind-SemiBold": require("@/assets/fonts/Hind/Hind-SemiBold.ttf"),
+    "Hind-Bold": require("@/assets/fonts/Hind/Hind-Bold.ttf"),
+    "Hind-Light": require("@/assets/fonts/Hind/Hind-Light.ttf"),
+    "Imprima-Regular": require("@/assets/fonts/Imprima/Imprima-Regular.ttf"),
   })
 
   useEffect(()=>{
@@ -21,8 +28,12 @@ export default function RootLayout() {
     return <Text>Error loading fonts</Text>
   }
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <SafeAreaProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="signup/page" options={{ headerShown: false }}/>
+        <Stack.Screen name="signin/page" options={{ headerShown: false }}/>
+      </Stack>
+    </SafeAreaProvider>
   )
 }
