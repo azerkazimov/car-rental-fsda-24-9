@@ -8,6 +8,7 @@ export default function SigninForm() {
     }
     return (
         <View style={styles.formContainer}>
+            
             <View style={styles.formItem}>
                 <Text style={styles.label}>Email Or Phone Number</Text>
                 <TextInput style={styles.input} placeholder="Email" />

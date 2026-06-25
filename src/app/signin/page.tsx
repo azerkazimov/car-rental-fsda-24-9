@@ -25,7 +25,6 @@ export default function SigninPage() {
 
 const styles = StyleSheet.create({
     container: {
-
         paddingHorizontal: 38,
     },
     titleContainer: {
