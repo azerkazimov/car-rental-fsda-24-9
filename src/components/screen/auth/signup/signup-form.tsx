@@ -83,14 +83,14 @@ export default function SignupForm() {
 
             <View style={styles.formItem}>
                 <Text style={styles.label}>Address</Text>
-                {/* Password Controller */}
+                {/* Adress Controller */}
                 <Controller
                     control={control}
                     name="address"
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
                             style={styles.input}
-                            placeholder="Password"
+                            placeholder="Adress"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
@@ -101,14 +101,14 @@ export default function SignupForm() {
 
             <View style={styles.formItem}>
                 <Text style={styles.label}>Age</Text>
-                {/* Password Controller */}
+                {/* Age Controller */}
                 <Controller
                     control={control}
                     name="age"
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
                             style={styles.input}
-                            placeholder="Password"
+                            placeholder="Age"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value?.toString()}
