@@ -31,7 +31,7 @@ export default function SigninForm() {
                 userData.password === data.password
             ) {
                 AsyncStorage.setItem('isAuthenticated', 'true')
-                router.replace("/catalog/page")
+                router.replace("/(tabs)")
             } else {
                 Alert.alert("Error", "Invalid email or password");
             }
