@@ -5,7 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { router } from "expo-router";
 
 export default function SignupForm() {
-    const { control, handleSubmit } = useForm()
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        
+    })
 
     const onSubmit = async (data: any) => {
         try {
@@ -73,6 +75,44 @@ export default function SignupForm() {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
+                            secureTextEntry={true}
+                        />
+                    )}
+                />
+            </View>
+
+            <View style={styles.formItem}>
+                <Text style={styles.label}>Address</Text>
+                {/* Password Controller */}
+                <Controller
+                    control={control}
+                    name="address"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Password"
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                        />
+                    )}
+                />
+            </View>
+
+            <View style={styles.formItem}>
+                <Text style={styles.label}>Age</Text>
+                {/* Password Controller */}
+                <Controller
+                    control={control}
+                    name="age"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Password"
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value?.toString()}
+                            keyboardType="numeric"
                         />
                     )}
                 />

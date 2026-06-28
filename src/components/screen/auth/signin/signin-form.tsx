@@ -1,23 +1,84 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 
 import Button from "@/shared/ui/button";
+import { Controller, useForm } from "react-hook-form";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { SigninFormType, signinSchema } from "@/app/signin/signin.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+
 
 export default function SigninForm() {
-    const handleSignIn = () => {
-        alert("Okay");
+
+    const { control, handleSubmit, formState: { errors } } = useForm<SigninFormType>({
+        resolver: zodResolver(signinSchema)
+    });
+
+    const onSubmit = async (data: any) => {
+        try {
+            const user = await AsyncStorage.getItem("user")
+
+            if (!user) return
+
+            const userData = JSON.parse(user)
+
+            if (
+                userData.email === data.email &&
+                userData.password === data.password
+            ) {
+                AsyncStorage.setItem('isAuthenticated', 'true')
+                router.replace("/catalog/page")
+            } else {
+                Alert.alert("Error", "Invalid email or password");
+            }
+
+        } catch (error) {
+            console.error(error);
+            Alert.alert("Error", "Something went wrong");
+        }
     }
     return (
         <View style={styles.formContainer}>
-            
+
             <View style={styles.formItem}>
                 <Text style={styles.label}>Email Or Phone Number</Text>
-                <TextInput style={styles.input} placeholder="Email" />
+                {/* Email Controller */}
+                <Controller
+                    control={control}
+                    name="email"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                        />
+                    )}
+                />
             </View>
             <View style={styles.formItem}>
                 <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} placeholder="********" />
+                {/* Password Controller */}
+                <Controller
+                    control={control}
+                    name="password"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            secureTextEntry={true}
+                            style={styles.input}
+                            placeholder="Password"
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                        />
+                    )}
+                />
             </View>
-            <Button onPress={handleSignIn}>Sign In</Button>
+
+            
+            <Button onPress={handleSubmit(onSubmit)}>Sign In</Button>
         </View>
     )
 }
