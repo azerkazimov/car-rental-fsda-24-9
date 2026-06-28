@@ -8,11 +8,14 @@ import { SigninFormType, signinSchema } from "@/components/screen/auth/signin/si
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
-
 export default function SigninForm() {
 
     const { control, handleSubmit, formState: { errors } } = useForm<SigninFormType>({
-        resolver: zodResolver(signinSchema)
+        resolver: zodResolver(signinSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        }
     });
 
     const onSubmit = async (data: any) => {
@@ -57,6 +60,7 @@ export default function SigninForm() {
                         />
                     )}
                 />
+                {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
             </View>
             <View style={styles.formItem}>
                 <Text style={styles.label}>Password</Text>
@@ -75,9 +79,9 @@ export default function SigninForm() {
                         />
                     )}
                 />
+                {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
             </View>
 
-            
             <Button onPress={handleSubmit(onSubmit)}>Sign In</Button>
         </View>
     )
@@ -102,5 +106,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: "#3D4F58",
         paddingHorizontal: 10,
+    },
+    error: {
+        color: "red",
+        fontSize: 12,
     },
 })
