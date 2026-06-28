@@ -4,7 +4,7 @@ import Button from "@/shared/ui/button";
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { SigninFormType, signinSchema } from "@/app/signin/signin.schema";
+import { SigninFormType, signinSchema } from "@/components/screen/auth/signin/signin.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
