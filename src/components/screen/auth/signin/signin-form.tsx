@@ -18,7 +18,7 @@ export default function SigninForm() {
         }
     });
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: SigninFormType) => {
         try {
             const user = await AsyncStorage.getItem("user")
 

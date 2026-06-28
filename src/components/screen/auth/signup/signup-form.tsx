@@ -3,13 +3,21 @@ import { Controller, useForm } from 'react-hook-form'
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { router } from "expo-router";
+import { SignupFormType, signupSchema } from "./signup.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignupForm() {
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        
+    const { control, handleSubmit, formState: { errors } } = useForm<SignupFormType>({
+        resolver: zodResolver(signupSchema),
+        defaultValues:{
+            username: "",
+            email: "",
+            password: "",
+            address: ""
+        }
     })
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: SignupFormType) => {
         try {
             await AsyncStorage.setItem("user", JSON.stringify(data))
             Alert.alert(`Sign up successful ${data.username} ${data.email} ${data.password}`)
@@ -40,6 +48,7 @@ export default function SignupForm() {
                         />
                     )}
                 />
+                {errors.username && <Text style={styles.error}>{errors.username.message}</Text>}
             </View>
 
             {/* Email Form Item */}
@@ -59,6 +68,7 @@ export default function SignupForm() {
                         />
                     )}
                 />
+                {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
             </View>
 
             {/* Password Form Item */}
@@ -79,6 +89,7 @@ export default function SignupForm() {
                         />
                     )}
                 />
+                {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
             </View>
 
             <View style={styles.formItem}>
@@ -99,24 +110,7 @@ export default function SignupForm() {
                 />
             </View>
 
-            <View style={styles.formItem}>
-                <Text style={styles.label}>Age</Text>
-                {/* Age Controller */}
-                <Controller
-                    control={control}
-                    name="age"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Age"
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value?.toString()}
-                            keyboardType="numeric"
-                        />
-                    )}
-                />
-            </View>
+            
             <Button onPress={handleSubmit(onSubmit)}>Sign Up</Button>
         </View>
     )
@@ -141,5 +135,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: "#3D4F58",
         paddingHorizontal: 10,
+    },
+    error: {
+        color: "red",
+        fontSize: 12,
     },
 })
