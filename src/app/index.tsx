@@ -1,9 +1,11 @@
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import { Alert, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { layoutTheme } from "../../constants/theme";
-import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function TiiraLogo() {
   return (
@@ -22,6 +24,30 @@ function TiiraLogo() {
 export default function Index() {
   const insets = useSafeAreaInsets();
   const router = useRouter()
+
+  useEffect(() => {
+    const chechAuthentification = async () => {
+      try {
+        const isAuthenticated = await AsyncStorage.getItem('isAuthenticated') // true or false
+
+        if (isAuthenticated === 'true' ) {
+          router.replace("/(tabs)")
+        } else {
+          router.replace("/signin/page")
+        }
+      } catch (error) {
+        Alert.alert("Error", "An error occurred during authentication. Please try again.");
+      }
+    }
+
+    const timer = setTimeout(()=>{
+      chechAuthentification()
+    }, 500)
+
+    return ()=> clearTimeout(timer)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <View style={styles.launchScreen}>

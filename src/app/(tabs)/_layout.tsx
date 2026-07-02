@@ -1,11 +1,16 @@
+import { useTheme } from "@/hooks/use-theme";
+import { ThemeType } from "@/types/theme-types";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { StyleSheet } from "react-native";
 
 export default function TabsLayout() {
+    const { colorScheme } = useTheme()
+    const styles = getStyles(colorScheme)
     return (
         <Tabs screenOptions={{
             tabBarStyle: styles.tabBar,
+            sceneStyle: styles.scene,
         }}>
             <Tabs.Screen name="index" options={{
                 title: "Home",
@@ -51,7 +56,7 @@ export default function TabsLayout() {
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: ThemeType) => StyleSheet.create({
     tabBar: {
         backgroundColor: "#27444e",
         borderTopWidth: 0,
@@ -62,6 +67,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 20,
         marginBottom: 20,
-        marginTop: 20,
+        marginTop: 0,
+    },
+    scene: {
+        backgroundColor: theme === "light" ? "#fff" : "#121212"
     }
 })
