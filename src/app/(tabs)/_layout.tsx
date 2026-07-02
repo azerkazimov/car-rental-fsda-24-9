@@ -10,7 +10,7 @@ export default function TabsLayout() {
     return (
         <Tabs screenOptions={{
             tabBarStyle: styles.tabBar,
-            sceneStyle: styles.scene,
+            sceneStyle: styles.sceneBackground,
         }}>
             <Tabs.Screen name="index" options={{
                 title: "Home",
@@ -58,18 +58,20 @@ export default function TabsLayout() {
 
 const getStyles = (theme: ThemeType) => StyleSheet.create({
     tabBar: {
-        backgroundColor: "#27444e",
+        backgroundColor: theme === "light"? "#4d5e63" : "#27444e",
         borderTopWidth: 0,
         height: 70,
         paddingBottom: 10,
         paddingTop: 10,
         paddingHorizontal: 20,
         borderRadius: 20,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         marginBottom: 20,
         marginTop: 0,
+        position: "absolute",
     },
-    scene: {
-        backgroundColor: theme === "light" ? "#fff" : "#121212"
+    sceneBackground: {
+        // Цвет фона за таббаром и самих экранов
+        backgroundColor: theme === "dark" ? "#121212" : "#fff", 
     }
 })
