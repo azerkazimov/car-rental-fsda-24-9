@@ -1,11 +1,11 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Alert, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { layoutTheme } from "../../constants/theme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { layoutTheme } from "../constants/theme";
 
 function TiiraLogo() {
   return (

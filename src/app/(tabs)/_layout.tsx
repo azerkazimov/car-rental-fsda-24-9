@@ -42,6 +42,17 @@ export default function TabsLayout() {
                     <Ionicons name="notifications" color={color} size={size} />
                 )
             }} />
+            <Tabs.Screen name='profile' options={{
+                title: "Profile",
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarActiveTintColor: "#F9B401",   // Active icon color
+                tabBarInactiveTintColor: "#95BCCC", // Inactive icon color
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="person" color={color} size={size} />
+                )
+            }}
+            />
             <Tabs.Screen name="settings" options={{
                 title: "Settings",
                 headerShown: false,
@@ -52,13 +63,22 @@ export default function TabsLayout() {
                     <Ionicons name="settings" color={color} size={size} />
                 )
             }} />
+            <Tabs.Screen name="profile/personal-information" options={{
+                title: "",
+                headerShown: false,
+                tabBarShowLabel: false, 
+                tabBarActiveTintColor: "#F9B401",   
+                tabBarInactiveTintColor: "#95BCCC", 
+                href: null
+            }}/>
+            
         </Tabs>
     )
 }
 
 const getStyles = (theme: ThemeType) => StyleSheet.create({
     tabBar: {
-        backgroundColor: theme === "light"? "#4d5e63" : "#27444e",
+        backgroundColor: theme === "light" ? "#4d5e63" : "#27444e",
         borderTopWidth: 0,
         height: 70,
         paddingBottom: 10,
@@ -71,7 +91,6 @@ const getStyles = (theme: ThemeType) => StyleSheet.create({
         position: "absolute",
     },
     sceneBackground: {
-        // Цвет фона за таббаром и самих экранов
-        backgroundColor: theme === "dark" ? "#121212" : "#fff", 
+        backgroundColor: theme === "dark" ? "#121212" : "#fff",
     }
 })

@@ -1,11 +1,11 @@
-import { View, FlatList, StyleSheet, Text } from "react-native";
 import { carModels } from "@/data/car-models";
-import CarDetailsCard from "./car-details-card";
-import { useState } from "react";
-import { layoutTheme } from "../../../constants/theme";
-import { CarModel } from "@/types/car-model.types";
 import { useTheme } from "@/hooks/use-theme";
+import { CarModel } from "@/types/car-model.types";
 import { ThemeType } from "@/types/theme-types";
+import { useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { layoutTheme } from "../../constants/theme";
+import CarDetailsCard from "./car-details-card";
 
 
 

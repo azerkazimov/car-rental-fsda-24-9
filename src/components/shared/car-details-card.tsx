@@ -1,6 +1,8 @@
+import { useTheme } from "@/hooks/use-theme";
 import { CarModel } from "@/types/car-model.types";
-import { View, Image, Text, StyleSheet, useWindowDimensions } from "react-native";
-import { layoutTheme } from "../../../constants/theme";
+import { ThemeType } from "@/types/theme-types";
+import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { layoutTheme } from "../../constants/theme";
 
 interface CarDetailsCardProps {
     car: CarModel | null;
@@ -8,7 +10,9 @@ interface CarDetailsCardProps {
 
 export default function CarDetailsCard({ car }: CarDetailsCardProps) {
     const { width } = useWindowDimensions()
-
+    const { colorScheme } = useTheme()
+    const styles = getStyles(colorScheme)
+    
     if (!car) return (
         <View>
             <Text>No car found</Text>
@@ -35,10 +39,10 @@ export default function CarDetailsCard({ car }: CarDetailsCardProps) {
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: ThemeType) => StyleSheet.create({
     carDetailsCard: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: theme === "light"? "#fafafa" : "#666666",
         marginHorizontal: 8,
         borderRadius: 15,
         overflow: "hidden",

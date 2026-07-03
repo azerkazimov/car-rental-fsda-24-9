@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import { layoutTheme } from "../../../constants/theme";
+import { layoutTheme } from "../../constants/theme";
 
 interface ButtonProps {
     children: React.ReactNode;

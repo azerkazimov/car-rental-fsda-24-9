@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { layoutTheme } from "../../../constants/theme";
 import SignupForm from "@/components/screen/auth/signup/signup-form";
 import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { layoutTheme } from "../../constants/theme";
 
 export default function SignupPage() {
     return (

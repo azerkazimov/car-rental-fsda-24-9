@@ -1,9 +1,8 @@
-import { Pressable, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
-import { layoutTheme } from "../../../constants/theme";
-import { Label, Link } from "expo-router";
 import SigninForm from "@/components/screen/auth/signin/signin-form";
+import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { layoutTheme } from "../../constants/theme";
 
 export default function SigninPage() {
     return (
