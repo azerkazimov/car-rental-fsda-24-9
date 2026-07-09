@@ -7,8 +7,6 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { layoutTheme } from "../../constants/theme";
 import CarDetailsCard from "./car-details-card";
 
-
-
 export default function CarCatalog() {
     const [reflesh, setReflesh] = useState(false)
     const { colorScheme } = useTheme()

@@ -40,6 +40,8 @@ export default function RootLayout() {
           <Stack.Screen name="signup/page" options={{ headerShown: false }} />
           <Stack.Screen name="signin/page" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="cars/[id]/page" options={{ headerShown: false }} />
+          <Stack.Screen name="booking/[id]/page" options={{ headerShown: false }} />
         </Stack>
     </ThemeProvider>
   )

@@ -11,6 +11,15 @@ export const layoutTheme ={
             colorPrimaryTextHover: "#415d66",
             colorPrimaryText: "#2b4c59",
             colorPrimaryTextActive: "#162a33",
+        },
+        secondary: {
+            colorSecondaryBg: "#f0f0f0",
+            colorSecondaryBgHover: "#e0e0e0",
+            colorSecondaryBorder: "#d0d0d0",
+            colorSecondaryBorderHover: "#b0b0b0",
+            colorSecondaryHover: "#909090",
+            colorSecondary: "#707070",
+            colorSecondaryActive: "#505050",
         }
     },
     fonts: {

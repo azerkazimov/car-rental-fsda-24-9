@@ -1,9 +1,7 @@
 import Header from "@/components/shared/component-header";
 import { useTheme } from "@/hooks/use-theme";
 import { ThemeType } from "@/types/theme-types";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Settings() {
     const { colorScheme, toggleTheme } = useTheme()

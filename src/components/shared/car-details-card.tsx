@@ -1,8 +1,9 @@
 import { useTheme } from "@/hooks/use-theme";
 import { CarModel } from "@/types/car-model.types";
 import { ThemeType } from "@/types/theme-types";
-import { Image, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { layoutTheme } from "../../constants/theme";
+import { Link, router } from "expo-router";
 
 interface CarDetailsCardProps {
     car: CarModel | null;
@@ -12,7 +13,7 @@ export default function CarDetailsCard({ car }: CarDetailsCardProps) {
     const { width } = useWindowDimensions()
     const { colorScheme } = useTheme()
     const styles = getStyles(colorScheme)
-    
+
     if (!car) return (
         <View>
             <Text>No car found</Text>
@@ -20,29 +21,31 @@ export default function CarDetailsCard({ car }: CarDetailsCardProps) {
     );
 
     return (
-        <View style={{ ...styles.carDetailsCard, width: width / 2 - 16 }}>
-            <Image source={{ uri: car.image }} style={styles.carImage} />
-            <View style={styles.carDetails}>
-                <View style={styles.carDetailsRow}>
-                    <Text>{car.brand}</Text>
-                    <Text>{car.model}</Text>
+        <TouchableOpacity onPress={()=>router.push(`/cars/${car.id}/page`)}>
+            <View style={{ ...styles.carDetailsCard, width: width / 2 - 16 }} >
+                <Image source={{ uri: car.image }} style={styles.carImage} />
+                <View style={styles.carDetails}>
+                    <View style={styles.carDetailsRow}>
+                        <Text>{car.brand}</Text>
+                        <Text>{car.model}</Text>
+                    </View>
+
+                    <View style={styles.carPrice}>
+                        <Text style={styles.carPriceText}>{car.pricePerDay}</Text>
+                        <Text style={styles.carPriceText}>/day</Text>
+
+                    </View>
+
                 </View>
-
-                <View style={styles.carPrice}>
-                    <Text style={styles.carPriceText}>{car.pricePerDay}</Text>
-                    <Text style={styles.carPriceText}>/day</Text>
-
-                </View>
-
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
 const getStyles = (theme: ThemeType) => StyleSheet.create({
     carDetailsCard: {
         flex: 1,
-        backgroundColor: theme === "light"? "#fafafa" : "#666666",
+        backgroundColor: theme === "light" ? "#fafafa" : "#666666",
         marginHorizontal: 8,
         borderRadius: 15,
         overflow: "hidden",
