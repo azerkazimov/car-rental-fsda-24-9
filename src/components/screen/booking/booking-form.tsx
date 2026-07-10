@@ -36,9 +36,22 @@ export default function BookingForm() {
         return cleaned.match(/.{1,4}/g)?.join(" ") || cleaned;
     }
 
-    const formatExpirationDate = (text: string) => {} // MM/YY
+    const formatExpirationDate = (text: string) => { // MM/YY
+        const cleaned = text.replace(/\D/g, "")
+        const month = cleaned.slice(0, 2)
+        const year = cleaned.slice(2, 4)
+        if (parseInt(month) > 12 || parseInt(year) > 36) {
+            return "";
+        }
+        return `${month}/${year}`;
 
-    const formatCvv = (text: string) => {} // 3 digits
+
+        // let formatted = cleaned;
+        // if (cleaned.length >= 2) {
+        //     formatted = `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
+        // }
+        // return formatted;
+    }
 
     const onSubmit = (data: BookingFormSchema) => {
         console.log("Form Submitted:", data);
@@ -75,7 +88,7 @@ export default function BookingForm() {
                 <Controller
                     control={control}
                     name="cardNumber"
-                    render={({ field}) => (
+                    render={({ field }) => (
                         <TextInput
                             style={[styles.input, errors.cardNumber && styles.inputError]}
                             placeholder="0000 0000 0000 0000"
@@ -105,7 +118,10 @@ export default function BookingForm() {
                                 placeholder="MM/YY"
                                 placeholderTextColor={placeholderColor}
                                 value={field.value}
-                                onChangeText={field.onChange}
+                                onChangeText={(text) => {
+                                    const formatted = formatExpirationDate(text);
+                                    field.onChange(formatted);
+                                }}
                                 keyboardType="numeric"
                                 maxLength={5}
                             />

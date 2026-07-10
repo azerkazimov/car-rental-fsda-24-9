@@ -70,6 +70,8 @@ export default function CarDetails() {
                         <Text style={styles.gridValue} numberOfLines={1}>{car.features}</Text>
                     </View>
                 </View>
+
+                
             </ScrollView>
 
             {/* Bottom Booking Bar */}
