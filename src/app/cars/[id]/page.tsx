@@ -1,6 +1,7 @@
 import { carModels } from "@/data/car-models";
 import { useTheme } from "@/hooks/use-theme";
 import { ThemeType } from "@/types/theme-types";
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,13 +25,13 @@ export default function CarDetails() {
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
-            {/* Header Toolbar */}
+            
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Text style={styles.backButtonText}>←</Text>
+                    <Ionicons name="chevron-back" size={20} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Details</Text>
-                <View style={{ width: 40 }} /> {/* Spacer to balance header */}
+                <View style={{ width: 40 }} />
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -80,7 +81,7 @@ export default function CarDetails() {
                     <Text style={styles.priceLabel}>Price</Text>
                     <Text style={styles.priceValue}>${car.pricePerDay}<Text style={styles.pricePeriod}>/day</Text></Text>
                 </View>
-                <TouchableOpacity style={styles.bookButton} onPress={()=>router.push(`/booking/${car.id}/page`)}>
+                <TouchableOpacity style={styles.bookButton} onPress={()=>router.push(`/calendar/${car.id}/page`)}>
                     <Text style={styles.bookButtonText}>Book Now</Text>
                 </TouchableOpacity>
             </View>

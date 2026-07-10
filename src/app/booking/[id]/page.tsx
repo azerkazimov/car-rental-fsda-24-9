@@ -3,6 +3,7 @@ import Header from "@/components/shared/component-header";
 import { layoutTheme } from "@/constants/theme";
 import { carModels } from "@/data/car-models";
 import { useTheme } from "@/hooks/use-theme";
+import { useBookingStore } from "@/store/use-booking";
 import { ThemeType } from "@/types/theme-types";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -12,10 +13,15 @@ export default function Booking() {
     const { colorScheme } = useTheme();
     const styles = getStyles(colorScheme);
 
+    const { bookingDays } = useBookingStore();
+    console.log(bookingDays);
+
     const { id } = useLocalSearchParams();
     const car = carModels.find(item => item.id === id);
 
     if (!car) return null;
+
+    const totalPrice = bookingDays ? bookingDays * car.pricePerDay : car.pricePerDay;
 
     return (
         <SafeAreaView style={styles.container} edges={["top"]}>
@@ -29,10 +35,12 @@ export default function Booking() {
                 <View style={styles.summaryCard}>
                     <Text style={styles.brand}>{car.brand}</Text>
                     <Text style={styles.model}>{car.model}</Text>
-                    <Text style={styles.price}>
-                        ${car.pricePerDay}
-                        <Text style={styles.pricePeriod}>/day</Text>
-                    </Text>
+                    <View style={styles.priceRow}>
+                        <Text style={styles.pricePeriod}>Total price for {bookingDays} days</Text>
+                        <Text style={styles.price}>
+                            ${totalPrice}
+                        </Text>
+                    </View>
                 </View>
 
                 <BookingForm />
@@ -79,12 +87,17 @@ const getStyles = (theme: ThemeType) => {
             fontSize: 20,
             fontFamily: layoutTheme.fonts.hind.semiBold,
             color: isLight ? primary.colorPrimaryText : secondary.colorSecondaryBg,
-            marginTop: 12,
         },
         pricePeriod: {
             fontSize: 14,
             fontFamily: layoutTheme.fonts.hind.regular,
             color: isLight ? secondary.colorSecondary : primary.colorPrimaryBg,
+            paddingBottom: 4
+        },
+        priceRow: {
+            flexDirection: "row",
+            alignItems: "flex-end",
+            gap: 6,
         },
     });
 };

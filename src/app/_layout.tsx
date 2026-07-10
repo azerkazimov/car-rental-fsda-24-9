@@ -1,15 +1,11 @@
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ThemeProvider from "@/context/theme-provider";
-import { useTheme } from "@/hooks/use-theme";
-import { ThemeType } from "@/types/theme-types";
 
 export default function RootLayout() {
-
-
   const [loaded, error] = useFonts({
     "Iceberg-Regular": require("@/assets/fonts/Iceberg/Iceberg-Regular.ttf"),
     "Hind-Regular": require("@/assets/fonts/Hind/Hind-Regular.ttf"),
@@ -20,7 +16,6 @@ export default function RootLayout() {
     "Imprima-Regular": require("@/assets/fonts/Imprima/Imprima-Regular.ttf"),
   })
 
-  
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -33,8 +28,10 @@ export default function RootLayout() {
   if (error) {
     return <Text>Error loading fonts</Text>
   }
+
   return (
-    <ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="signup/page" options={{ headerShown: false }} />
@@ -42,9 +39,10 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="cars/[id]/page" options={{ headerShown: false }} />
           <Stack.Screen name="booking/[id]/page" options={{ headerShown: false }} />
+          <Stack.Screen name="booking/success" options={{ headerShown: false }} />
+          <Stack.Screen name="calendar/[id]/page" options={{ headerShown: false }} />
         </Stack>
-    </ThemeProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }
-
-

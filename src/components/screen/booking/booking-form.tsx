@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { bookingFormSchema, BookingFormSchema } from "./booking-form.schema";
+import { router } from "expo-router";
 
 
 export default function BookingForm() {
@@ -55,6 +56,7 @@ export default function BookingForm() {
 
     const onSubmit = (data: BookingFormSchema) => {
         console.log("Form Submitted:", data);
+        router.push("/booking/success");
     };
 
     return (

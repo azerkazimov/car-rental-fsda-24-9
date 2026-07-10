@@ -8,15 +8,15 @@ export function useTheme(): ThemeContextType {
     const context = useContext(ThemeContext)
     const systemColorScheme = useSystemColorScheme()
 
+    const colorScheme = useMemo((): "light" | "dark" => {
+        if (context?.theme === "light") return "light"
+        if (context?.theme === "dark") return "dark"
+        return systemColorScheme === "dark" ? "dark" : "light"
+    }, [context?.theme, systemColorScheme])
+
     if (context === undefined) {
         throw new Error("useTheme must be used within a ThemeProvider")
     }
-
-    const colorScheme = useMemo((): "light" | "dark" => {
-        if (context.theme === "light") return "light"
-        if (context.theme === "dark") return "dark"
-        return systemColorScheme === "dark" ? "dark" : "light"
-    }, [context.theme, systemColorScheme])
 
     return { ...context, colorScheme }
 }
