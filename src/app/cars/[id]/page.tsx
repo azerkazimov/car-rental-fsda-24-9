@@ -25,7 +25,7 @@ export default function CarDetails() {
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
-            
+
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={20} />
@@ -38,8 +38,8 @@ export default function CarDetails() {
                 {/* Car Image */}
                 <View style={styles.imageContainer}>
                     {/* Replace source with actual logic if car.image is a URL or require local asset */}
-                    <Image 
-                        source={typeof car.image === 'string' ? { uri: car.image } : car.image} 
+                    <Image
+                        source={typeof car.image === 'string' ? { uri: car.image } : car.image}
                         style={styles.image}
                         resizeMode="contain"
                     />
@@ -72,7 +72,7 @@ export default function CarDetails() {
                     </View>
                 </View>
 
-                
+
             </ScrollView>
 
             {/* Bottom Booking Bar */}
@@ -81,7 +81,7 @@ export default function CarDetails() {
                     <Text style={styles.priceLabel}>Price</Text>
                     <Text style={styles.priceValue}>${car.pricePerDay}<Text style={styles.pricePeriod}>/day</Text></Text>
                 </View>
-                <TouchableOpacity style={styles.bookButton} onPress={()=>router.push(`/calendar/${car.id}/page`)}>
+                <TouchableOpacity style={styles.bookButton} onPress={() => router.push(`/calendar/${car.id}/page`)}>
                     <Text style={styles.bookButtonText}>Book Now</Text>
                 </TouchableOpacity>
             </View>
