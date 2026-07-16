@@ -298,7 +298,7 @@ const getStyles = (theme: ThemeType) =>
             paddingHorizontal: 24,
         },
         map: {
-            ...StyleSheet.absoluteFill,
+            ...StyleSheet.absoluteFillObject,
         },
         message: {
             color: theme === "dark" ? "#fff" : "#121212",

@@ -48,12 +48,6 @@ const config = {
           "Allow $(PRODUCT_NAME) to use your location.",
       },
     ],
-    [
-      "react-native-maps",
-      {
-        iosGoogleMapsApiKey: process.env.EXPO_PUBLIC_IOS_MAPS_API_KEY,
-      },
-    ],
   ],
   experiments: {
     typedRoutes: true,
