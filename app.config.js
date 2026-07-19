@@ -48,6 +48,19 @@ const config = {
           "Allow $(PRODUCT_NAME) to use your location.",
       },
     ],
+    [
+      "expo-notifications",
+      {
+        "icon": "./local/assets/notification_icon.png",
+        "color": "#ffffff",
+        "defaultChannel": "default",
+        "sounds": [
+          "./local/assets/notification_sound.wav",
+          "./local/assets/notification_sound_other.wav"
+        ],
+        "enableBackgroundRemoteNotifications": false
+      }
+    ]
   ],
   experiments: {
     typedRoutes: true,

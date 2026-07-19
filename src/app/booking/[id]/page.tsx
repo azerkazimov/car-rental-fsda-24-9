@@ -3,10 +3,12 @@ import Header from "@/components/shared/component-header";
 import { layoutTheme } from "@/constants/theme";
 import { carModels } from "@/data/car-models";
 import { useTheme } from "@/hooks/use-theme";
+import { useBookingStore as useConfirmedBookingStore } from "@/store/booking-store";
 import { useBookingStore } from "@/store/use-booking";
 import { ThemeType } from "@/types/theme-types";
 import { useLocalSearchParams } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Booking() {
@@ -14,10 +16,16 @@ export default function Booking() {
     const styles = getStyles(colorScheme);
 
     const { bookingDays } = useBookingStore();
-    console.log(bookingDays);
+    const { setSelectedCar, setRentalDays } = useConfirmedBookingStore();
 
     const { id } = useLocalSearchParams();
     const car = carModels.find(item => item.id === id);
+
+    useEffect(() => {
+        if (!car) return;
+        setSelectedCar(car);
+        setRentalDays(bookingDays && bookingDays > 0 ? bookingDays : 1);
+    }, [car, bookingDays, setSelectedCar, setRentalDays]);
 
     if (!car) return null;
 
@@ -27,24 +35,31 @@ export default function Booking() {
         <SafeAreaView style={styles.container} edges={["top"]}>
             <Header>Booking</Header>
 
-            <ScrollView
-                contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0}
+                style={styles.keyboardAvoidingView}
             >
-                <View style={styles.summaryCard}>
-                    <Text style={styles.brand}>{car.brand}</Text>
-                    <Text style={styles.model}>{car.model}</Text>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.pricePeriod}>Total price for {bookingDays} days</Text>
-                        <Text style={styles.price}>
-                            ${totalPrice}
-                        </Text>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View style={styles.summaryCard}>
+                        <Text style={styles.brand}>{car.brand}</Text>
+                        <Text style={styles.model}>{car.model}</Text>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.pricePeriod}>Total price for {bookingDays} days</Text>
+                            <Text style={styles.price}>
+                                ${totalPrice}
+                            </Text>
+                        </View>
                     </View>
-                </View>
 
-                <BookingForm />
-            </ScrollView>
+                    <BookingForm />
+                </ScrollView>
+            </KeyboardAvoidingView>
+
         </SafeAreaView>
     );
 }
@@ -57,6 +72,9 @@ const getStyles = (theme: ThemeType) => {
         container: {
             flex: 1,
             backgroundColor: isLight ? secondary.colorSecondaryBgHover : primary.colorPrimaryActive,
+        },
+        keyboardAvoidingView: {
+            flex: 1,
         },
         scrollContent: {
             paddingHorizontal: 20,

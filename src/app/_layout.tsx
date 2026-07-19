@@ -4,6 +4,16 @@ import { useEffect } from "react";
 import { Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ThemeProvider from "@/context/theme-provider";
+import {
+  configureNotificationHandler,
+  registerForPushNotificationsAsync,
+} from "@/notifications/register";
+import {
+  removeNotificationListeners,
+  setupNotificationListeners,
+} from "@/notifications/listeners";
+
+configureNotificationHandler();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -21,6 +31,15 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded, error])
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+    setupNotificationListeners();
+
+    return () => {
+      removeNotificationListeners();
+    };
+  }, []);
 
   if (!loaded) {
     return <Text>Loading...</Text>

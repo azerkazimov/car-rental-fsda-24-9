@@ -3,7 +3,7 @@ import { useTheme } from "@/hooks/use-theme"
 import { ThemeType } from "@/types/theme-types"
 import { Ionicons } from "@expo/vector-icons"
 import { Image } from "expo-image"
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as ImagePicker from "expo-image-picker"
 import { useState } from "react"
@@ -67,19 +67,21 @@ export default function PersonalInformation() {
     return (
         <SafeAreaView style={styles.container}>
             <Header>Personal Information</Header>
-            <ScrollView style={styles.scrollView}>
-                <View style={styles.content}>
-                    <View style={styles.profileImageContainer}>
-                        <View style={styles.profileImageOverlay}>
-                            <Image source={avatar ? { uri: avatar } : require("@/assets/images/profile.png")} style={styles.profileImage} />
-                            <TouchableOpacity style={styles.profileImageButton} onPress={pickImage}>
-                                <Ionicons name="camera" size={18} color={colorScheme === "light" ? "#666666" : "#fff"} />
-                            </TouchableOpacity>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0} style={styles.keyboardAvoidingView}>
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.content}>
+                        <View style={styles.profileImageContainer}>
+                            <View style={styles.profileImageOverlay}>
+                                <Image source={avatar ? { uri: avatar } : require("@/assets/images/profile.png")} style={styles.profileImage} />
+                                <TouchableOpacity style={styles.profileImageButton} onPress={pickImage}>
+                                    <Ionicons name="camera" size={18} color={colorScheme === "light" ? "#666666" : "#fff"} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
+                        <PersonalInformationForm />
                     </View>
-                    <PersonalInformationForm />
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
@@ -88,6 +90,9 @@ const getStyles = (theme: ThemeType) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme === "light" ? "#fff" : "#121212"
+    },
+    keyboardAvoidingView: {
+        flex: 1,
     },
     scrollView: {
         flex: 1,

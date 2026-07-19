@@ -38,7 +38,7 @@ export default function BookingSuccess() {
 
                 <Text style={styles.title}>Booking Confirmed</Text>
                 <Text style={styles.subtitle}>
-                    Your reservation is all set. We sent a confirmation to your email.
+                    Your reservation is all set. We sent a confirmation notification to your device.
                 </Text>
 
                 <View style={styles.card}>

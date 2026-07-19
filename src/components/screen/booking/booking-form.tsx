@@ -1,21 +1,23 @@
 import { layoutTheme } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
+import { useBookingStore as useConfirmedBookingStore } from "@/store/booking-store";
 import { ThemeType } from "@/types/theme-types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { bookingFormSchema, BookingFormSchema } from "./booking-form.schema";
 import { router } from "expo-router";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { bookingFormSchema, BookingFormSchema } from "./booking-form.schema";
 
 
 export default function BookingForm() {
     const { colorScheme } = useTheme();
     const styles = getStyles(colorScheme);
+    const confirmBooking = useConfirmedBookingStore((state) => state.confirmBooking);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const placeholderColor = colorScheme === "light"
         ? layoutTheme.colors.secondary.colorSecondary
         : layoutTheme.colors.primary.colorPrimaryBorder;
-
-
 
     const { control, handleSubmit, formState: { errors } } = useForm<BookingFormSchema>({
         resolver: zodResolver(bookingFormSchema),
@@ -54,9 +56,23 @@ export default function BookingForm() {
         // return formatted;
     }
 
-    const onSubmit = (data: BookingFormSchema) => {
-        console.log("Form Submitted:", data);
-        router.push("/booking/success");
+    const onSubmit = async (_data: BookingFormSchema) => {
+        try {
+            setIsSubmitting(true);
+            const booking = await confirmBooking();
+
+            if (!booking) {
+                Alert.alert("Booking failed", "Please select a car and rental dates, then try again.");
+                return;
+            }
+
+            router.push("/booking/success");
+        } catch (error) {
+            console.error("Error confirming booking:", error);
+            Alert.alert("Booking failed", "Something went wrong. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -154,8 +170,20 @@ export default function BookingForm() {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit(onSubmit)}>
-                <Text style={styles.submitButtonText}>Confirm & Pay</Text>
+            <TouchableOpacity
+                style={[styles.submitButton, isSubmitting && styles.submitButtonDisabled]}
+                onPress={handleSubmit(onSubmit)}
+                disabled={isSubmitting}
+                activeOpacity={0.85}
+            >
+                {isSubmitting ? (
+                    <ActivityIndicator color={colorScheme === "light"
+                        ? layoutTheme.colors.secondary.colorSecondaryBg
+                        : layoutTheme.colors.primary.colorPrimaryText}
+                    />
+                ) : (
+                    <Text style={styles.submitButtonText}>Confirm & Pay</Text>
+                )}
             </TouchableOpacity>
         </View>
     );
@@ -224,6 +252,11 @@ const getStyles = (theme: ThemeType) => {
             borderRadius: 12,
             alignItems: "center",
             marginTop: 8,
+            minHeight: 56,
+            justifyContent: "center",
+        },
+        submitButtonDisabled: {
+            opacity: 0.7,
         },
         submitButtonText: {
             color: theme === "light" ? secondary.colorSecondaryBg : primary.colorPrimaryText,
